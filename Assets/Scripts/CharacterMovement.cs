@@ -24,7 +24,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetVelocity(float speed)
     {
-        _velocity = new Vector3(1.0f, .0f, .0f) * Mathf.Clamp(speed, -1.0f, 1.0f);
+        _velocity = new Vector3(.0f, .0f, -1.0f) * Mathf.Clamp(speed, -1.0f, 1.0f);
         if (speed > .0f + _epsilon || speed < .0f - _epsilon)
             transform.forward = _velocity.normalized;
     }
