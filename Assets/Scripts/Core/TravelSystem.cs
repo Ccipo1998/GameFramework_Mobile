@@ -4,47 +4,79 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TravelSystem : Singleton<TravelSystem>
+public class TravelSystem : Singleton<TravelSystem>, ISystem
 {
     public delegate void TravelCompleteDelegate();
     public TravelCompleteDelegate _OnTravelComplete;
 
     [SerializeField]
-    private string _InitialScenePath;
+    private string _LoadingSceneName;
+
+    private string _currentSceneName;
+    private string _targetSceneName;
+
+    // flag -> loading coroutine running
+    private bool _isLoadingDone;
 
     [SerializeField]
-    private string _LoadingScenePath;
+    private int _Priority;
 
-    private string _currentScenePath;
-    private string _targerScenePath;
+    public int Priority => _Priority;
 
+    /*
     private void Start() {
+        _isLoadingDone = true;
         _currentScenePath = SceneManager.GetActiveScene().name;
         SceneLoad(_InitialScenePath);
     }
+    */
+
+    public void Setup()
+    {
+        // initializations
+        _isLoadingDone = true;
+        _currentSceneName = SceneManager.GetActiveScene().name;
+
+        // notify systems coordinator
+        SystemsCoordinator.Instance.SystemReady(this);
+    }
 
     public void SceneLoad(string scenePath) {
+        // the loading has been called
+        _isLoadingDone = false;
+
         StartCoroutine(Load(scenePath));
     }
 
-    private IEnumerator Load(string scenePath) {
-        _targerScenePath = scenePath;
+    public bool IsLoadingDone()
+    {
+        return _isLoadingDone;
+    }
 
-        AsyncOperation loading_load = SceneManager.LoadSceneAsync(_LoadingScenePath, LoadSceneMode.Additive);
+    private IEnumerator Load(string scenePath) {
+        _targetSceneName = scenePath;
+
+        AsyncOperation loading_load = SceneManager.LoadSceneAsync(_LoadingSceneName, LoadSceneMode.Additive);
         yield return new WaitUntil(() => { return loading_load.isDone; });
 
-        AsyncOperation current = SceneManager.UnloadSceneAsync(_currentScenePath);
+        AsyncOperation current = SceneManager.UnloadSceneAsync(_currentSceneName);
         yield return new WaitUntil(() => { return current.isDone; });
 
-        AsyncOperation target = SceneManager.LoadSceneAsync(_targerScenePath, LoadSceneMode.Additive);
+        AsyncOperation target = SceneManager.LoadSceneAsync(_targetSceneName, LoadSceneMode.Additive);
         yield return new WaitUntil(() => { return target.isDone; });
 
-        _currentScenePath = _targerScenePath;
-        _targerScenePath = string.Empty;
+        _currentSceneName = _targetSceneName;
+        _targetSceneName = string.Empty;
 
-        AsyncOperation loading_unload = SceneManager.UnloadSceneAsync(_LoadingScenePath);
+        AsyncOperation loading_unload = SceneManager.UnloadSceneAsync(_LoadingSceneName);
         yield return new WaitUntil(() => { return loading_unload.isDone; });
 
+        // the loading is done
+        _isLoadingDone = true;
+
         _OnTravelComplete?.Invoke();
+
+        // launch flow system trigger
+        BoltFlowSystem.Instance.TriggerFSMevent(BoltFlowSystem.Instance.FormatSceneNameFSMtrigger(scenePath));
     }
 }
