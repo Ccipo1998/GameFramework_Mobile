@@ -9,9 +9,15 @@ public class MainMenuViewController : MonoBehaviour
 
     private OptionViewController _optionViewController;
 
-    public void ChangeScene(string scene)
+    [SerializeField]
+    private string _OnStartGameFlowEvent;
+
+    public void StartGame(string sceneName)
     {
-        TravelSystem.Instance.SceneLoad(scene);
+        //TravelSystem.Instance.SceneLoad(scene);
+
+        BoltFlowSystem.Instance.SetFSMvariable("SCENE_TO_LOAD", sceneName);
+        BoltFlowSystem.Instance.TriggerFSMevent(_OnStartGameFlowEvent);
     }
 
     public void OpenOptions()
