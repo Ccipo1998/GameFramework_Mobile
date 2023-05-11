@@ -393,7 +393,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -9218355994642336812}
         m_TargetAssemblyTypeName: PauseViewController, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_MethodName: ReturnTo
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1287,3 +1287,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ResumeIdProvider: {fileID: 11400000, guid: 7c7ff023095cde3449fb16d5aa519f77, type: 2}
+  _OnReturnToFlowEvent: PAUSE_EXIT
+  _OnResumeFlowEvent: PAUSE_CLOSE

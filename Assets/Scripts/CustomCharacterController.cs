@@ -21,6 +21,9 @@ public class CustomCharacterController : MonoBehaviour
     [SerializeField]
     private AudioSource _JumpAudio;
 
+    [SerializeField]
+    private string _OnPauseFlowEvent;
+
     private float _epsilon = .0001f;
     private PauseViewController _pauseViewController;
 
@@ -94,7 +97,10 @@ public class CustomCharacterController : MonoBehaviour
 
     private void PauseGame()
     {
+        _Movement.SetVelocity(.0f);
         PlayerController.Instance.DisableInputProvider(_IdProvider.Id);
+
+        BoltFlowSystem.Instance.TriggerFSMevent(_OnPauseFlowEvent);
 
         if (_pauseViewController) // == null
             return;
