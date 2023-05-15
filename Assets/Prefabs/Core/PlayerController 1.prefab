@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ProviderList:
   - {fileID: 422043296879130395}
-  _Priority: 20
+  _Priority: 30
 --- !u!1 &422043296879130372
 GameObject:
   m_ObjectHideFlags: 0
