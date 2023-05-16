@@ -23,14 +23,6 @@ public class TravelSystem : Singleton<TravelSystem>, ISystem
 
     public int Priority => _Priority;
 
-    /*
-    private void Start() {
-        _isLoadingDone = true;
-        _currentScenePath = SceneManager.GetActiveScene().name;
-        SceneLoad(_InitialScenePath);
-    }
-    */
-
     public void Setup()
     {
         // initializations
@@ -75,8 +67,5 @@ public class TravelSystem : Singleton<TravelSystem>, ISystem
         _isLoadingDone = true;
 
         _OnTravelComplete?.Invoke();
-
-        // launch flow system trigger
-        BoltFlowSystem.Instance.TriggerFSMevent(BoltFlowSystem.Instance.FormatSceneNameFSMtrigger(scenePath));
     }
 }

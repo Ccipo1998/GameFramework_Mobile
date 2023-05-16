@@ -13,17 +13,6 @@ public class SystemsCoordinator : Singleton<SystemsCoordinator>
     // the number of systems that have notified ready status
     private int _systemsReady;
 
-    [SerializeField]
-    private string _OnSetupFinishedFlowEvent;
-
-    [SerializeField]
-    private string _InitialSceneName;
-
-    private void Start()
-    {
-        StartSystems();
-    }
-
     // store and setup all the systems
     public void StartSystems()
     {
@@ -65,16 +54,15 @@ public class SystemsCoordinator : Singleton<SystemsCoordinator>
         _systemsStatus[sys] = true;
         ++_systemsReady;
 
-        CheckAllSystemsReady();
+        //CheckAllSystemsReady();
     }
 
-    // check if all the systems are ready and launch an event on the flow system
-    private void CheckAllSystemsReady()
+    // check if all the systems are ready (called by the flow system)
+    public bool AreAllSystemsReady()
     {
         if (_systemsReady == _systemsStatus.Count)
-        {
-            BoltFlowSystem.Instance.SetFSMvariable("SCENE_TO_LOAD", _InitialSceneName);
-            BoltFlowSystem.Instance.TriggerFSMevent(_OnSetupFinishedFlowEvent);
-        }
+            return true;
+
+        return false;
     }
 }
