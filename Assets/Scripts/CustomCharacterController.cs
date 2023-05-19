@@ -28,7 +28,7 @@ public class CustomCharacterController : MonoBehaviour
     
     private void Awake() {
         _InputProvider = PlayerController.Instance.GetInput<GameplayInputProvider>(_IdProvider.Id);
-        PlayerController.Instance.EnableInputProvider(_IdProvider.Id);
+        //PlayerController.Instance.EnableInputProvider(_IdProvider.Id);
         //_characterController = GetComponent<CharacterController>();
     }
 
@@ -97,7 +97,6 @@ public class CustomCharacterController : MonoBehaviour
         _Movement.SetVelocity(.0f);
         Time.timeScale = .0f;
 
-        PlayerController.Instance.DisableInputProvider(_IdProvider.Id);
         BoltFlowSystem.Instance.TriggerFSMevent(_OnPauseFlowEvent);
     }
 }

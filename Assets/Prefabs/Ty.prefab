@@ -3387,6 +3387,7 @@ MonoBehaviour:
   _Animator: {fileID: 7026888794093995657}
   _FootstepsAudio: {fileID: 686229346547857219}
   _JumpAudio: {fileID: 4379144537718425398}
+  _OnPauseFlowEvent: PAUSE_OPEN
 --- !u!114 &4426293880085430702
 MonoBehaviour:
   m_ObjectHideFlags: 0

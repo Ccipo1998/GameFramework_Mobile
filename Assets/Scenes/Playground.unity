@@ -579,10 +579,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 561003449764135884, guid: e4896722824911b4cb4b71af3997d334, type: 3}
-      propertyPath: _OnPauseFlowEvent
-      value: PAUSE_OPEN
-      objectReference: {fileID: 0}
     - target: {fileID: 4859565395293789325, guid: e4896722824911b4cb4b71af3997d334, type: 3}
       propertyPath: m_RootOrder
       value: 1

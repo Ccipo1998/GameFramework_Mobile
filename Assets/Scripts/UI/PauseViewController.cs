@@ -15,7 +15,6 @@ public class PauseViewController : MonoBehaviour
     public void Resume()
     {
         BoltFlowSystem.Instance.TriggerFSMevent(_OnResumeFlowEvent);
-        PlayerController.Instance.EnableInputProvider(_ResumeIdProvider.Id);
 
         Time.timeScale = 1.0f;
 
