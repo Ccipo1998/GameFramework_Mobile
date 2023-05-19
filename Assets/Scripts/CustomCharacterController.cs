@@ -25,10 +25,7 @@ public class CustomCharacterController : MonoBehaviour
     private string _OnPauseFlowEvent;
 
     private float _epsilon = .0001f;
-    private PauseViewController _pauseViewController;
-
-    //private CharacterController _characterController;
-
+    
     private void Awake() {
         _InputProvider = PlayerController.Instance.GetInput<GameplayInputProvider>(_IdProvider.Id);
         PlayerController.Instance.EnableInputProvider(_IdProvider.Id);
@@ -98,15 +95,9 @@ public class CustomCharacterController : MonoBehaviour
     private void PauseGame()
     {
         _Movement.SetVelocity(.0f);
-        PlayerController.Instance.DisableInputProvider(_IdProvider.Id);
-
-        BoltFlowSystem.Instance.TriggerFSMevent(_OnPauseFlowEvent);
-
-        if (_pauseViewController) // == null
-            return;
-
         Time.timeScale = .0f;
 
-        _pauseViewController = Instantiate(_PauseViewPrefab);
+        PlayerController.Instance.DisableInputProvider(_IdProvider.Id);
+        BoltFlowSystem.Instance.TriggerFSMevent(_OnPauseFlowEvent);
     }
 }

@@ -15,9 +15,10 @@ public class PauseViewController : MonoBehaviour
     public void Resume()
     {
         BoltFlowSystem.Instance.TriggerFSMevent(_OnResumeFlowEvent);
-
         PlayerController.Instance.EnableInputProvider(_ResumeIdProvider.Id);
+
         Time.timeScale = 1.0f;
+
         Destroy(gameObject);
     }
 
@@ -27,5 +28,7 @@ public class PauseViewController : MonoBehaviour
 
         BoltFlowSystem.Instance.SetFSMvariable("SCENE_TO_LOAD", sceneName);
         BoltFlowSystem.Instance.TriggerFSMevent(_OnReturnToFlowEvent);
+
+        Time.timeScale = 1.0f;
     }
 }
